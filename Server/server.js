@@ -12,14 +12,14 @@ var io = socketIO(server);
 io.on('connection',function (socket) {
     console.log('new user connected');
 
-    socket.emit('newMessage',{
-        from: 'mike@hotmail.com',
-        text:'hello',
-        createAt:123
-    });
 
     socket.on('createMessage',function (message) {
         console.log('createMessage',message);
+        io.emit('newMessage',{
+           from:message.from,
+            text:message.text,
+            createAt:new Date().getTime()
+        });
     });
 
     socket.on('disconnect',function () {
